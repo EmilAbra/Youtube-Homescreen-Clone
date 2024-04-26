@@ -1,7 +1,8 @@
 import { CategoryPills } from "./components/CategoryPills";
 import { PageHeader } from "./layouts/PageHeader";
-import { categories } from "./data/home.ts";
+import { categories, videos } from "./data/home.ts";
 import { useState } from "react";
+import { VideoGridItem } from "./components/VideoGridItem.tsx";
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
@@ -11,13 +12,18 @@ function App() {
       <PageHeader />
       <div className="grid grid-cols-[auto,1fr] flex-grow-1 overflow-auto">
         <div>Sidebar</div>
-        <div className="overflow-hidden px-8 pb-4">
+        <div className="overflow-x-hidden px-8 pb-4">
           <div className="sticky top-0 bg-white z-10 pb-4">
             <CategoryPills
               categories={categories}
               selectedCategory={selectedCategory}
               onSelect={setSelectedCategory}
             />
+          </div>
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
+            {videos.map((video) => (
+              <VideoGridItem key={video.id} {...video} />
+            ))}
           </div>
         </div>
       </div>
